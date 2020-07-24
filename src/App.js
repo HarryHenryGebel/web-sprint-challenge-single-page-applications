@@ -6,6 +6,7 @@ import './App.css';
 import 'fontsource-roboto';
 
 import Topbar from './components/Topbar';
+import Pizza from "./components/Pizza";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -25,8 +26,7 @@ export default function App () {
           </Paper>
         </Route>
         <Route path="/pizza">
-          <Paper style={{height: "100vh"}}>
-          </Paper>
+          <Pizza/>
         </Route>
       </ThemeProvider>
   );
