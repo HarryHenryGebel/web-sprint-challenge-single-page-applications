@@ -14,6 +14,7 @@ import { Button,
          Select,
          Typography} from '@material-ui/core';
 import * as yup from 'yup';
+import requester from 'easier-requests';
 
 const defaultPizza = {
   name: "",
@@ -34,7 +35,8 @@ const validationSchema = yup.object().shape({
 
 export default function Pizza () {
   const [formValue, setFormValue] = useState(defaultPizza),
-        [validationErrors, setValidationErrors] = useState({});
+        [validationErrors, setValidationErrors] = useState({}),
+        [orderData, setOrderData] = useState({});
 
   useEffect(() => {
     validationSchema.validate(formValue, {abortEarly: false})
@@ -47,6 +49,27 @@ export default function Pizza () {
         setValidationErrors(errors);
       });
   }, [formValue]);
+
+  function addOrder() {
+    const newOrder = formValue;
+
+    async function _submit() {
+      try {
+        const id = requester.createUniqueID();
+        await requester.post('https://reqres.in/api/users',
+                             id,
+                             newOrder);
+        const response = requester.response(id).data;
+        console.log(response);
+        setOrderData(response);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+
+    }
+    _submit();
+  }
 
   function handleCheck (field, value) {
     setFormValue({...formValue, [field]: value});
@@ -138,6 +161,11 @@ export default function Pizza () {
                    (event) => handleText('requests', event.target.value)} />
         </FormControl>
       </form>
+      <Button id="add-order-button"
+              onClick={addOrder}
+              variant="contained">
+        Add to my order!
+      </Button>
     </Paper>
   );
 }
