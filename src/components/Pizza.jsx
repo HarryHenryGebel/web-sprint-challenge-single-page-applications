@@ -116,6 +116,7 @@ export default function Pizza () {
           <FormGroup>
             <FormControlLabel
               control={<Checkbox checked={formValue.pepperoni}
+                                 id="pepperoni-check"
                                  onChange={
                                    (event) => handleCheck(
                                      "pepperoni", event.target.checked)}
@@ -124,10 +125,11 @@ export default function Pizza () {
             />
             <FormControlLabel
               control={<Checkbox checked={formValue.sausage}
-                                  onChange={
-                                    (event) => handleCheck(
-                                      "sausage", event.target.checked)}
-                                  name="sausage" />}
+                                 id="sausage-check"
+                                 onChange={
+                                   (event) => handleCheck(
+                                     "sausage", event.target.checked)}
+                                 name="sausage" />}
               label="Sausage"
             />
             <FormControlLabel
@@ -140,10 +142,10 @@ export default function Pizza () {
             />
             <FormControlLabel
               control={<Checkbox checked={formValue.bacon}
-                                  onChange={
-                                    (event) => handleCheck(
-                                      "bacon", event.target.checked)}
-                                  name="bacon" />}
+                                 onChange={
+                                   (event) => handleCheck(
+                                     "bacon", event.target.checked)}
+                                 name="bacon" />}
               label="Bacon"
             />
           </FormGroup>
