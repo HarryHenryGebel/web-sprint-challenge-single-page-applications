@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button,
+         Checkbox,
          Divider,
          FormControl,
+         FormControlLabel,
+         FormGroup,
+         FormHelperText,
+         FormLabel,
          Input,
          InputLabel,
          MenuItem,
@@ -12,7 +17,12 @@ import * as yup from 'yup';
 
 const defaultPizza = {
   name: "",
-  size: "Small"
+  size: "Small",
+  pepperoni: false,
+  sausage: false,
+  beef: false,
+  bacon: false,
+  requests: ""
 };
 
 const validationSchema = yup.object().shape({
@@ -38,9 +48,12 @@ export default function Pizza () {
       });
   }, [formValue]);
 
+  function handleCheck (field, value) {
+    setFormValue({...formValue, [field]: value});
+  }
 
-  function handleName (event) {
-    setFormValue({...formValue, name:event.target.value});
+  function handleText (field, value) {
+    setFormValue({...formValue, [field]: value});
   }
 
   function handleSize (event) {
@@ -57,7 +70,9 @@ export default function Pizza () {
              `Name (${validationErrors.name})` :
              "Name"}
           </InputLabel>
-          <Input id="name-text" value={formValue.name} onChange={handleName} />
+          <Input id="name-text"
+                 value={formValue.name}
+                 onChange={(event) => handleText('name', event.target.value)} />
         </FormControl>
         <Divider orientation='vertical' flexItem />
         <FormControl>
@@ -72,7 +87,59 @@ export default function Pizza () {
             <MenuItem value={"Large"}>Large</MenuItem>
           </Select>
         </FormControl>
+        <Divider orientation='vertical' flexItem />
+        <FormControl component="fieldset">
+          <FormLabel>How about some toppings</FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={formValue.pepperoni}
+                                 onChange={
+                                   (event) => handleCheck(
+                                     "pepperoni", event.target.checked)}
+                                 name="pepperoni" />}
+              label="Pepperoni"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formValue.sausage}
+                                  onChange={
+                                    (event) => handleCheck(
+                                      "sausage", event.target.checked)}
+                                  name="sausage" />}
+              label="Sausage"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formValue.beef}
+                                 onChange={
+                                   (event) => handleCheck(
+                                     "beef", event.target.checked)}
+                                 name="beef" />}
+              label="Beef"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formValue.bacon}
+                                  onChange={
+                                    (event) => handleCheck(
+                                      "bacon", event.target.checked)}
+                                  name="bacon" />}
+              label="Bacon"
+            />
+          </FormGroup>
+          <FormHelperText>
+            For plain, just don't check anything!'
+          </FormHelperText>
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="requests-text">
+            Special Requests:
+          </InputLabel>
+          <Input id="requests-text"
+                 value={formValue.requests}
+                 onChange={
+                   (event) => handleText('requests', event.target.value)} />
+        </FormControl>
       </form>
     </Paper>
   );
 }
+
+//  LocalWords:  fieldset
