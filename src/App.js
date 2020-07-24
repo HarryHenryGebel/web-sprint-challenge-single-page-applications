@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from 'react';
+import {Route, Router} from 'react-router-dom';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Paper } from '@material-ui/core';
+import './App.css';
+import 'fontsource-roboto';
 
-const App = () => {
+import Topbar from './components/Topbar';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
+export default function App () {
   return (
-    <>
-      <h1>Lambda Eats</h1>
-      <p>You can remove this code and create your own header</p>
-    </>
+      <ThemeProvider theme={darkTheme}>
+        <Route exact path="/">
+          <Paper style={{height: "100vh"}}>
+            <Topbar/>
+          </Paper>
+        </Route>
+        <Route path="/pizza">
+          <Paper style={{height: "100vh"}}>
+          </Paper>
+        </Route>
+      </ThemeProvider>
   );
 };
-export default App;
+
+//  LocalWords:  roboto Topbar
